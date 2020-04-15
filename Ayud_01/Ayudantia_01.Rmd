@@ -81,7 +81,8 @@ Titanic[Sex == "female", .(Survived,Age)]  ## Me quedo con la información de so
 Para más información sobre como manipular bases de datos, se recomienda visitar la página <https://atrebas.github.io/post/2019-03-03-datatable-dplyr/>, o bien consultar en páginas como Rpubs y Stack Overflow. Ahora si, veamos los datos de dicha base.
 
 ```{r Viendo base}
-View(Titanic)
+#View(Titanic)
+print(tail(Titanic,3))
 head(Titanic,5)  #Alternativa
 nrow(Titanic)
 ncol(Titanic)
@@ -144,6 +145,11 @@ Titanic[,min(Age, na.rm = T), by = "Survived"]
 Titanic[,mean(Age, na.rm = T), by = "Survived"]
 Titanic[,median(Age, na.rm = T), by = "Survived"]
 Titanic[,quantile(Age, na.rm = T), by = "Survived"]
+
+
+#Tambien se puede poner sin "", no se por qué pasa eso.
+Titanic[,max(Age, na.rm = T), by = Ticket]
+Titanic[,quantile(Age, na.rm = T), by = Survived]
 ```
 
 ¿Y si deseamos ver los datos aún más desagregados? Por ejemplo, con respecto a si es sobreviviente y y por género.
