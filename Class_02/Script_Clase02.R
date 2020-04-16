@@ -25,7 +25,7 @@ tiktoc<-c("Que", "linda", "te ves", "limpiando", "Esperancita")
 
 paste("Hola","Mundo",sep=" ")
 
-paste(tiktoc,collapse = " ")
+paste(tiktoc, collapse = " ")
 
 obj2<- as.numeric(c(1,2,3,4,"Esperancita"))
 is.na(obj2)
@@ -92,18 +92,26 @@ l1[[2]][3:5]
 
 l1$Perrito
 
+
 d1[1,]
 d1[,1]
-d1[,'lat']
-d1$mag[seq(1,16,2)]
-d1$lat[1:4]
 
+d1[,'lat'] 
+d1$lat
+d1$mag[seq(1,16,2)]
+
+d1$lat[1:4]
 d1[,'lat']
+
 d1[1:4,c('lat','long')]
 
 d1$mag>5
+
+
 table(d1$mag>5)
+d1[d1$mag>5, c("stations","mag")]
 d1[d1$mag>6,'stations']
+
 
 d1$dummy_5up<-as.numeric(d1$mag>5)
 head(d1)
@@ -180,10 +188,11 @@ library(data.table)
 #install.packages("data.table")
 quakes<-data.table(quakes)
 
-
+#3 formas para obtener el mismo resultado:
 quakes[quakes$mag>6,'mag']
-
+quakes[quakes$mag>6,.(mag)]
 quakes[mag>6,.(mag)]
+
 
 quakes[,mean(mag),by=.(stations)]
 
@@ -191,9 +200,12 @@ quakes[,mean(mag),by=.(stations)]
 
 library(readxl)
 
-casos<-data.table(read_excel("Class_02/2020-03-17-Casos-confirmados.xlsx",na = "—",trim_ws = TRUE,col_names = TRUE),stringsAsFactors = FALSE)
+casos = data.table(read_excel("Clases2/Class_02/2020-03-17-Casos-confirmados.xlsx",na="-",trim_ws = T,col_names = T),stringsAsFactors = F)
 
-casos<-casos[Región=="Metropolitana",]
+casos[,Región=="Metropolitana"] #entrega en valores logicos los resultados
+casos[Región=="Metropolitana",]
+casos[Región=="Metropolitana"]
+casos<-casos[Región=="Metropolitana"]
 
 library(ggplot2)
 

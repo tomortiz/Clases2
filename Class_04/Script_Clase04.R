@@ -14,14 +14,12 @@ library(data.table)
 
 
 
-casos<-data.table(read_excel("Class_02/2020-03-17-Casos-confirmados.xlsx",na = "—",trim_ws = TRUE,col_names = TRUE),stringsAsFactors = FALSE)
+casos<-data.table(read_excel("Clases2/Class_02/2020-03-17-Casos-confirmados.xlsx",na = "—",trim_ws = TRUE,col_names = TRUE),stringsAsFactors = FALSE)
 
 names(casos)
 casos<-casos[Región=="Metropolitana",]
 
-saveRDS(casos,"Class_03/casosRM.rds")
-
-write.csv(casos,file = 'Class_03/CasosCovid_RM.csv',fileEncoding = 'UTF-8')
+write.csv(casos,file = 'Clases2/Class_03/CasosCovid_RM.csv',fileEncoding = 'windows-1252')
 
 writexl::write_xlsx(casos,path = "Class_03/CasosenExcel.xlsx")
 
@@ -31,7 +29,7 @@ library(foreign)
 
 
 
-casosRM<-fread("Class_03/CasosCovid_RM.csv",header = T, showProgress = T,data.table = T)
+casosRM<-fread("Clases2/Class_03/CasosCovid_RM.csv",header = T, showProgress = T,data.table = T)
 
 casosRM[,table(Sexo)]
 casosRM[Sexo=="Fememino",Sexo:="Femenino"]
@@ -124,7 +122,7 @@ ggplotly(p1)
 
 #histograms
 
-ggplot(casos,aes(x=Edad))+geom_histogram()
+ggplot(casos,aes(x=as.numeric(Edad)))+geom_histogram()
 ggplot(E,aes(x=AvAge))+geom_histogram()
 
 # Kernel Densities
@@ -135,8 +133,8 @@ ggplot(E,aes(x=AvAge,group=Sexo,colour=Sexo))+geom_density()
 ggplot(E,aes(x=AvAge,group=Sexo,colour=Sexo))+geom_density()+facet_wrap(~Sexo)
 
 
-#looking at the whole country
-casos<-data.table(read_excel("Class_02/2020-03-17-Casos-confirmados.xlsx",na = "—",trim_ws = TRUE,col_names = TRUE),stringsAsFactors = FALSE)
+ll#looking at the whole country
+casos<-data.table(read_excel("Clases2/Class_02/2020-03-17-Casos-confirmados.xlsx",na = "—",trim_ws = TRUE,col_names = TRUE),stringsAsFactors = FALSE)
 
 ggplot(casos,aes(x=Edad,group=Sexo,fill=Sexo))+geom_histogram()+facet_wrap(~factor(Región))
 

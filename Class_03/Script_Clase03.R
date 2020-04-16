@@ -14,16 +14,16 @@ library(data.table)
 
 
 
-casos<-data.table(read_excel("Class_02/2020-03-17-Casos-confirmados.xlsx",na = "—",trim_ws = TRUE,col_names = TRUE),stringsAsFactors = FALSE)
+casos<-data.table(read_excel("Clases2/Class_02/2020-03-17-Casos-confirmados.xlsx",na = "—",trim_ws = TRUE,col_names = TRUE),stringsAsFactors = FALSE)
 
 names(casos)
 casos<-casos[Región=="Metropolitana",]
 
-saveRDS(casos,"Class_03/casosRM.rds")
+saveRDS(casos,"Clases2/Class_03/casosRM.rds.rds")
 
-write.csv(casos,file = 'Class_03/CasosCovid_RM.csv',fileEncoding = 'UTF-8')
+write.csv(casos,file = 'Clases2/Class_03/CasosCovid_RM.csv',fileEncoding = 'windows-1252')
 
-writexl::write_xlsx(casos,path = "Class_03/CasosenExcel.xlsx")
+writexl::write_xlsx(casos,path = "Clases2/Class_03/CasosenExcel.xlsx")
 
 library(foreign)
 
@@ -31,7 +31,7 @@ write.dta
 
 
 
-casosRM<-fread("Class_03/CasosCovid_RM.csv",header = T, showProgress = T,data.table = T)
+casosRM<-fread("Clases2/Class_03/CasosCovid_RM.csv",header = T, showProgress = T,data.table = T)
 
 casosRM[,table(Sexo)]
 casosRM[Sexo=="Fememino",Sexo:="Femenino"]
@@ -55,8 +55,7 @@ casosRM[,.N,by=.(Sexo,`Centro de salud`)]
 #Collapsing by Centro de Salud 
 
 names(casosRM)
-obj1<-casosRM[,.N,by=.(`Centro de salud`)]
-
+obj1<-casosRM[,.N,by=.(`Centro de salud`)] #realiza una sumatoria de casos por centro de salud
 
 obj1[,sum(N,na.rm = T)]
 
@@ -65,7 +64,7 @@ obj1[,porc:=N/sum(N,na.rm = T)]
 # collapsing (colapsar) by average age
 
 
-A<-casosRM[,.(AvAge=mean(Edad,na.rm = T)),by=.(`Centro de salud`)]
+A<-casosRM[,.(AvAge=mean(as.numeric(Edad),na.rm = T)),by=.(`Centro de salud`)]
 
 B<-casosRM[,.(Total_centro=.N),by=.(`Centro de salud`)]
 
@@ -93,7 +92,7 @@ ABCD[,porc_mujeres:=Total_Centro_Mujeres/Total_centro]
 
 # reshaping
 
-E<-casosRM[,.(AvAge=mean(Edad,na.rm = T),`Casos confirmados`=.N),by=.(`Centro de salud`,Sexo)]
+E<-casosRM[,.(AvAge=mean(as.numeric(Edad),na.rm = T),`Casos confirmados`=.N),by=.(`Centro de salud`,Sexo)]
 
 G<-reshape(E,direction = 'wide',timevar = 'Sexo',v.names = c('AvAge','Casos confirmados'),idvar = 'Centro de salud')
 
