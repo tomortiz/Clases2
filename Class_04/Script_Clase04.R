@@ -63,7 +63,7 @@ obj1[,porc:=N/sum(N,na.rm = T)]
 # collapsing (colapsar) by average age
 
 
-A<-casosRM[,.(AvAge=mean(Edad,na.rm = T)),by=.(`Centro de salud`)]
+A<-casosRM[,.(AvAge=mean(as.numeric(Edad),na.rm = T)),by=.(`Centro de salud`)]
 
 B<-casosRM[,.(Total_centro=.N),by=.(`Centro de salud`)]
 
@@ -91,7 +91,7 @@ ABCD[,porc_mujeres:=Total_Centro_Mujeres/Total_centro]
 
 # reshaping
 
-E<-casosRM[,.(AvAge=mean(Edad,na.rm = T),`Casos confirmados`=.N),by=.(`Centro de salud`,Sexo)]
+E<-casosRM[,.(AvAge=mean(as.numeric(Edad),na.rm = T),`Casos confirmados`=.N),by=.(`Centro de salud`,Sexo)]
 
 G<-reshape(E,direction = 'wide',timevar = 'Sexo',v.names = c('AvAge','Casos confirmados'),idvar = 'Centro de salud')
 
@@ -163,7 +163,7 @@ library(data.table)
 help(package='sp')
 View(ogrDrivers())
 
-comunas_rm<-readOGR("Class_04/ComunasR13/COMUNA_C17.shp")
+comunas_rm<-readOGR("Clases2/Class_04/ComunasR13/")
 class(comunas_rm)
 
 comunas_rm@proj4string
@@ -199,8 +199,6 @@ zonas_valparaiso<-merge(zonas_valparaiso,poblacion_adulto_mayor_zonas,by="geocod
 #plotting
 library(RColorBrewer)
 paleta <- rev(brewer.pal(n = 9,name = "Reds"))
-
-
 
 ggplot(zonas_valparaiso) + 
   geom_sf(aes(fill = AdultosMayores, geometry = geometry)) +

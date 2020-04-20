@@ -157,8 +157,10 @@ ggplot(zonas_valparaiso2) +
   labs(title = "Poblacion de 65 años y más", subtitle = "Valparaíso y Viña del Mar") +
   theme_minimal(base_size = 13)
 
+
 #comparing histograms of the same variable
 
 hist(zonas_valparaiso$AdultosMayores,main = "Histograma Adultos Mayores Viña-Valpo")
+
 
 hist(zonas_valparaiso2$AdultosMayores,main = "Histograma Adultos Mayores Viña-Valpo")
