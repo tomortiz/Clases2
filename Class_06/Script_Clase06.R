@@ -4,10 +4,9 @@
 ## Program: Master in Business Analytics
 ## Institution: Universidad Adolfo Ibáñez
 
-
 # Spatial randomness
-
-install.packages('plot.matrix')
+library(sp)
+#install.packages('plot.matrix')
 library(plot.matrix)
 library(classInt)
 
